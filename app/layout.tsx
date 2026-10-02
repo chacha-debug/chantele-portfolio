@@ -1,30 +1,43 @@
-import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
+import type { Metadata, Viewport } from "next";
+import { Bricolage_Grotesque, Caveat } from "next/font/google";
 import "./globals.css";
 
-const geistSans = Geist({
-  variable: "--font-geist-sans",
+const bricolage = Bricolage_Grotesque({
+  variable: "--font-bricolage",
   subsets: ["latin"],
+  display: "swap",
 });
 
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
+const caveat = Caveat({
+  variable: "--font-caveat",
   subsets: ["latin"],
+  display: "swap",
 });
+
+const description =
+  "Portfolio of Chantele Mucuio, a final-year ICT student and software developer focused on Java, Python, backend development and modern web applications.";
 
 export const metadata: Metadata = {
-  title: "Chantele Mucuio | Software Developer",
-  description:
-    "Portfolio of Chantele Mucuio, a final-year ICT student and software developer focused on Java, Python, backend development and modern web applications.",
+  title: {
+    default: "Chantele Mucuio | Software Developer",
+    template: "%s | Chantele Mucuio",
+  },
+  description,
+  openGraph: {
+    title: "Chantele Mucuio | Software Developer",
+    description,
+    type: "website",
+  },
+};
+
+export const viewport: Viewport = {
+  themeColor: "#FFB8D6",
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html
-      lang="en"
-      className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
-    >
-      <body className="min-h-full flex flex-col">{children}</body>
+    <html lang="en" className={`${bricolage.variable} ${caveat.variable}`}>
+      <body>{children}</body>
     </html>
   );
 }
