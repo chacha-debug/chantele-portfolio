@@ -54,7 +54,7 @@ export const projects: Project[] = [
     github: "https://github.com/chacha-debug/logistics-management-api",
     live: "https://logistics-api-4rr3.onrender.com/",
     image: {
-      src: "/projects/logistics.png",
+      src: "/images/logistics.png",
       width: 1895,
       height: 919,
       alt: "The Logistics Console dashboard, showing shipment totals, a status filter and a shipment directory table.",
@@ -140,7 +140,7 @@ export const projects: Project[] = [
     github: "https://github.com/chacha-debug/recall",
     live: "https://recall-three-iota.vercel.app/",
     image: {
-      src: "/projects/recall.png",
+      src: "/images/recall.png",
       width: 1895,
       height: 902,
       alt: "The Recall landing page, with a headline about turning notes into mastery and three steps for creating flashcards.",
@@ -234,7 +234,7 @@ export const projects: Project[] = [
     github: "https://github.com/chacha-debug/community-reporta",
     live: "https://community-reporta.vercel.app/",
     image: {
-      src: "/projects/community-reporta.png",
+      src: "/images/community-reporta.png",
       width: 1891,
       height: 914,
       alt: "The Community Reporta home page, with buttons to report an issue or track a report.",
