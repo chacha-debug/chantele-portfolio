@@ -16,31 +16,45 @@ export default function Nav({ home = false }: { home?: boolean }) {
   const [active, setActive] = useState("");
   const prefix = home ? "" : "/";
 
-  // Highlight the section currently in view (home page only).
+  // Highlight the section currently in view.
   useEffect(() => {
     if (!home) return;
+
     const sections = items
       .map((item) => document.getElementById(item.id))
       .filter((el): el is HTMLElement => el !== null);
 
     const io = new IntersectionObserver(
       (entries) => {
-        for (const entry of entries) {
-          if (entry.isIntersecting) setActive(entry.target.id);
-        }
+        entries.forEach((entry) => {
+          if (entry.isIntersecting) {
+            setActive(entry.target.id);
+          }
+        });
       },
-      { rootMargin: "-45% 0px -50% 0px" },
+      {
+        rootMargin: "-35% 0px -55% 0px",
+      },
     );
+
     sections.forEach((section) => io.observe(section));
 
     const hero = document.getElementById("home");
+
     const heroIo = new IntersectionObserver(
       ([entry]) => {
-        if (entry.isIntersecting) setActive("");
+        if (entry.isIntersecting) {
+          setActive("");
+        }
       },
-      { rootMargin: "-45% 0px -50% 0px" },
+      {
+        rootMargin: "-35% 0px -55% 0px",
+      },
     );
-    if (hero) heroIo.observe(hero);
+
+    if (hero) {
+      heroIo.observe(hero);
+    }
 
     return () => {
       io.disconnect();
@@ -48,23 +62,47 @@ export default function Nav({ home = false }: { home?: boolean }) {
     };
   }, [home]);
 
-  // Mobile menu: lock scroll, close on Escape.
+  // Mobile menu behaviour.
   useEffect(() => {
     if (!open) return;
-    const previous = document.documentElement.style.overflow;
-    document.documentElement.style.overflow = "hidden";
-    const onKey = (event: KeyboardEvent) => {
-      if (event.key === "Escape") setOpen(false);
+
+    const previousOverflow = document.body.style.overflow;
+
+    // Prevent the page behind the menu from scrolling.
+    document.body.style.overflow = "hidden";
+
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setOpen(false);
+      }
     };
-    window.addEventListener("keydown", onKey);
+
+    window.addEventListener("keydown", onKeyDown);
+
     return () => {
-      document.documentElement.style.overflow = previous;
-      window.removeEventListener("keydown", onKey);
+      document.body.style.overflow = previousOverflow;
+      window.removeEventListener("keydown", onKeyDown);
     };
   }, [open]);
 
+  // Close mobile menu if the screen becomes desktop-sized.
+  useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth >= 768) {
+        setOpen(false);
+      }
+    };
+
+    window.addEventListener("resize", handleResize);
+
+    return () => {
+      window.removeEventListener("resize", handleResize);
+    };
+  }, []);
+
   return (
     <header className="fixed inset-x-0 top-0 z-50 border-b border-ink/15 bg-paper/90 backdrop-blur-md">
+      {/* Skip link */}
       <a
         href="#main"
         className="absolute left-4 top-3 -translate-y-20 bg-ink px-3 py-2 text-sm text-paper focus:translate-y-0"
@@ -74,22 +112,26 @@ export default function Nav({ home = false }: { home?: boolean }) {
 
       <nav
         aria-label="Primary"
-        className="mx-auto flex h-16 max-w-[1500px] items-center justify-between px-6 md:px-10"
+        className="mx-auto flex h-16 max-w-[1500px] items-center justify-between px-4 sm:px-6 md:px-10"
       >
+        {/* Logo / Name */}
         <Link
           href={home ? "#home" : "/"}
           onClick={() => setOpen(false)}
-          className="text-xl font-extrabold tracking-[-0.04em]"
+          className="text-lg font-extrabold tracking-[-0.04em] sm:text-xl"
         >
           chantele mucuio
         </Link>
 
+        {/* Desktop navigation */}
         <ul className="hidden items-center gap-9 md:flex">
           {items.map((item) => (
             <li key={item.id}>
               <Link
                 href={`${prefix}#${item.id}`}
-                aria-current={active === item.id ? "location" : undefined}
+                aria-current={
+                  active === item.id ? "location" : undefined
+                }
                 className={`u-link pb-0.5 text-[0.95rem] ${
                   active === item.id ? "u-link-on text-burnt" : ""
                 }`}
@@ -98,6 +140,7 @@ export default function Nav({ home = false }: { home?: boolean }) {
               </Link>
             </li>
           ))}
+
           <li>
             <a
               href={links.cv}
@@ -110,48 +153,61 @@ export default function Nav({ home = false }: { home?: boolean }) {
           </li>
         </ul>
 
+        {/* Mobile menu button */}
         <button
           type="button"
           onClick={() => setOpen((value) => !value)}
           aria-expanded={open}
           aria-controls="mobile-menu"
-          className="border border-ink px-4 py-1.5 text-sm md:hidden"
+          aria-label={open ? "Close navigation menu" : "Open navigation menu"}
+          className="border border-ink px-4 py-2 text-sm transition-colors duration-200 active:bg-ink active:text-paper md:hidden"
         >
           {open ? "Close" : "Menu"}
         </button>
       </nav>
 
-      {open && (
-        <div
-          id="mobile-menu"
-          className="fixed inset-x-0 bottom-0 top-16 overflow-y-auto bg-ink px-6 py-10 text-paper md:hidden dark-zone"
-        >
+      {/* Mobile navigation */}
+      <div
+        id="mobile-menu"
+        aria-hidden={!open}
+        className={`fixed inset-x-0 top-16 bottom-0 z-40 overflow-y-auto bg-ink text-paper transition-all duration-300 ease-out md:hidden ${
+          open
+            ? "visible translate-y-0 opacity-100"
+            : "invisible -translate-y-2 opacity-0"
+        }`}
+      >
+        <div className="min-h-full px-5 py-8 sm:px-6 sm:py-10">
           <ul className="flex flex-col">
             {items.map((item, i) => (
-              <li key={item.id} className="border-b border-paper/20">
+              <li
+                key={item.id}
+                className="border-b border-paper/20"
+              >
                 <Link
                   href={`${prefix}#${item.id}`}
                   onClick={() => setOpen(false)}
-                  className="flex items-baseline gap-4 py-5 text-4xl font-bold tracking-[-0.03em]"
+                  className="flex items-center gap-4 py-5 text-3xl font-bold tracking-[-0.03em] sm:text-4xl"
                 >
-                  <span className="font-hand text-2xl text-burnt-bright">
+                  <span className="font-hand text-xl text-burnt-bright sm:text-2xl">
                     {String(i + 1).padStart(2, "0")}
                   </span>
-                  {item.label}
+
+                  <span>{item.label}</span>
                 </Link>
               </li>
             ))}
           </ul>
+
           <a
             href={links.cv}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-10 inline-block border border-paper px-6 py-3"
+            className="mt-8 inline-flex border border-paper px-6 py-3 transition-colors duration-200 active:bg-paper active:text-ink"
           >
             Resume ↗︎
           </a>
         </div>
-      )}
+      </div>
     </header>
   );
 }
