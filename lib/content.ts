@@ -368,7 +368,7 @@ export const currently = [
 
 export const academics = [
   ["Programming I", "98%"],
-  ["Web Development I", "94%"],
+  ["Web Development I", "84%"],
   ["Application Development", "88%"],
   ["Dean\u2019s List", "2\u00d7"],
 ];

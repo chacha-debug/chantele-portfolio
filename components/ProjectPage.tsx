@@ -117,14 +117,10 @@ export default function ProjectPage({ project }: { project: Project }) {
                         project.image.width / project.image.height / 0.95,
                     }}
                   >
-                    <Image
+                    <img
                       src={project.image.src}
-                      width={project.image.width}
-                      height={project.image.height}
                       alt={project.image.alt}
-                      sizes="(min-width: 1500px) 1400px, 100vw"
-                      preload
-                      className="drift-img absolute inset-x-0 -top-[2.5%] h-auto w-full"
+                      className="drift-img absolute inset-x-0 -top-[2.5%] h-auto w-full object-cover"
                     />
                   </div>
                 </Wipe>
