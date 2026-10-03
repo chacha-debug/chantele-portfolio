@@ -81,7 +81,7 @@ export default function Nav({ home = false }: { home?: boolean }) {
           onClick={() => setOpen(false)}
           className="text-xl font-extrabold tracking-[-0.04em]"
         >
-          chantele
+          chantele mucuio
         </Link>
 
         <ul className="hidden items-center gap-9 md:flex">

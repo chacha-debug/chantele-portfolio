@@ -104,9 +104,9 @@ export default function ProjectPage({ project }: { project: Project }) {
           <div className="mx-auto max-w-[1500px] px-6 md:px-10">
             <div className="relative">
               <Wipe
-                className={`absolute inset-0 translate-x-3 translate-y-3 md:translate-x-4 md:translate-y-4 ${accentBg[project.accent]}`}
+                className={`absolute inset-0 translate-x-3 translate-y-3 md:translate-x-4 md:translate-y-4`}
               >
-                <span className="block h-full w-full" />
+                <span className={`block h-full w-full ${accentBg[project.accent]}`} />
               </Wipe>
               <Drift className="relative">
                 <Wipe delay={250}>
@@ -244,7 +244,7 @@ export default function ProjectPage({ project }: { project: Project }) {
         {/* Next project */}
         <section className="dark-zone bg-ink text-paper">
           <Link
-            href={`/projects/${next.slug}`}
+            href={`/work/${next.slug}`}
             className="group mx-auto block max-w-[1500px] px-6 py-20 md:px-10 md:py-28"
           >
             <p className="font-hand text-3xl text-sun">up next</p>

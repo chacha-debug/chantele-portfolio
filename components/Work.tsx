@@ -13,7 +13,7 @@ const accentBg = {
 
 function Feature({ project, index }: { project: Project; index: number }) {
   const flip = index % 2 === 1;
-  const href = `/projects/${project.slug}`;
+  const href = `/work/${project.slug}`;
 
   return (
     <article className="border-t border-ink pt-5 md:pt-6">
@@ -43,13 +43,13 @@ function Feature({ project, index }: { project: Project; index: number }) {
           }`}
         >
           <Wipe
-            className={`absolute inset-0 transition-transform duration-500 ease-out ${accentBg[project.accent]} ${
+            className={`absolute inset-0 transition-transform duration-500 ease-out ${
               flip
                 ? "-translate-x-3 translate-y-3 group-hover/img:-translate-x-5 group-hover/img:translate-y-5"
                 : "translate-x-3 translate-y-3 group-hover/img:translate-x-5 group-hover/img:translate-y-5"
             }`}
           >
-            <span className="block h-full w-full" />
+            <span className={`block h-full w-full ${accentBg[project.accent]}`} />
           </Wipe>
 
           <Drift className="relative">
