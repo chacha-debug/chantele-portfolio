@@ -141,8 +141,8 @@ export const projects: Project[] = [
     live: "https://recall-three-iota.vercel.app/",
     image: {
       src: "/images/recall.png",
-      width: 1895,
-      height: 902,
+      width: 1280,
+      height: 680,
       alt: "The Recall landing page, with a headline about turning notes into mastery and three steps for creating flashcards.",
     },
     accent: "sun",
@@ -235,8 +235,8 @@ export const projects: Project[] = [
     live: "https://community-reporta.vercel.app/",
     image: {
       src: "/images/community-reporta.png",
-      width: 1891,
-      height: 914,
+      width: 1280,
+      height: 680,
       alt: "The Community Reporta home page, with buttons to report an issue or track a report.",
     },
     accent: "brick",

@@ -36,7 +36,11 @@ export const viewport: Viewport = {
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
   return (
-    <html lang="en" className={`${bricolage.variable} ${caveat.variable}`}>
+    <html
+      lang="en"
+      data-scroll-behavior="smooth"
+      className={`${bricolage.variable} ${caveat.variable}`}
+    >
       <body suppressHydrationWarning>{children}</body>
     </html>
   );
